@@ -4,7 +4,7 @@ You can download the processed data for evaluation from [ADD_LINK_HERE](#).
 
 You can also refer to the [data document](./data.md)s more details about the data generation process to process your custom data.
 
-## Inetractive Demo with JupyterRos (Optional)
+## Interactive Demo with JupyterRos (Optional)
 
 You might need some hack to install jupyter ros with ipython kernel aware of ros workspace. Please refer to [Installation](https://jupyter-ros.readthedocs.io/en/latest/user_installation.html) and [Troubleshooting](https://jupyter-ros.readthedocs.io/en/latest/user_troubleshooting.html) for more details. 
 
