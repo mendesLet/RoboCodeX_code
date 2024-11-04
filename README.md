@@ -178,6 +178,6 @@ Please download the preprocessed data from:
 
 Please refer to [data](instruct_to_policy/data.md) for more details.
 
-## Run
+## Run the whole pipeline
 
 Please refer to [instruct_to_policy](instruct_to_policy/README.md) package for more details.
