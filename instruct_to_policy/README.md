@@ -1,8 +1,3 @@
-## Data pre-process
-
-You can download the processed data for evaluation from [ADD_LINK_HERE](#).
-
-You can also refer to the [data document](./data.md)s more details about the data generation process to process your custom data.
 
 ## Interactive Demo with JupyterRos (Optional)
 
