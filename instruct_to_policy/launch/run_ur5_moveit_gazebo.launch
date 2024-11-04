@@ -1,0 +1,58 @@
+<!-- copied & modified from panda_moveit_config package in moveit tutorial 
+https://github.com/ros-planning/panda_moveit_config/blob/noetic-devel/launch/demo_gazebo.launch -->
+
+<launch>
+  <!-- Moveit options -->
+  <arg name="enable_moveit" default="true" />
+  <arg name="pipeline" default="ompl" />
+  <arg name="moveit_rviz" default="true" />
+
+  <!-- Gazebo specific options -->
+  <arg name="gazebo_gui" default="true" />
+  <arg name="paused" default="false" />
+  <arg name="verbose" default="false" />
+  <arg name="camera_set" default="true"/>
+  <arg name="camera_model" default="$(find realsense_gazebo_plugin)/urdf/triple_d435_cameras.urdf.xacro"/>
+
+  <!-- Image pipeline options -->
+  <arg name="align_depth_to_rgb" default="true" />
+  <arg name="publish_pointcloud" default="false" />
+  <arg name="use_gt_planning_scene" default="true" />
+  <arg name="use_gt_bounding_box" default="true" />
+
+  <!-- Environment variables for loading local artifacts -->
+  <env name="GAZEBO_MODEL_PATH" value="$(find instruct_to_policy)/data/ycb/models:$(find instruct_to_policy)/data/google_scanned_object/models:$(find instruct_to_policy)/models:$(optenv GAZEBO_MODEL_PATH)"/>
+  <env name="GAZEBO_RESOURCE_PATH" value="$(find instruct_to_policy)/worlds:$(optenv GAZEBO_RESOURCE_PATH)"/>
+  <env name="LD_LIBRARY_PATH" value="$(find instruct_to_policy)/../../../devel/lib:$(optenv LD_LIBRARY_PATH)"/>
+
+  <!-- world settings -->
+  <!-- pose to spawn UR5 robot -->
+  <arg name="x" default="-0.45" />
+  <arg name="y" default="0.0" />
+  <arg name="z" default="1.02" />
+  <!-- run demo by default -->
+  <arg name="world" default="$(find instruct_to_policy)/worlds/demo_table_cabinet.world" />
+
+  <!-- Launch Gazebo and spawn the robot -->
+  <include file="$(find instruct_to_policy)/launch/ur5_gazebo.launch" pass_all_args="true">
+    <arg name="world_name" value="$(arg world)"/>
+    <arg name="use_gt_planning_scene" default="$(arg use_gt_planning_scene)" />
+    <arg name="use_gt_bounding_box" default="$(arg use_gt_bounding_box)" />
+
+  </include>
+
+  <!-- Launch the camera set -->
+  <include file="$(find instruct_to_policy)/launch/gazebo_spawn_camera.launch">
+    <arg name="camera_model" value="$(arg camera_model)"/>
+    <arg name="align_depth_to_rgb" value="$(arg align_depth_to_rgb)"/>
+    <arg name="publish_pointcloud" value="$(arg publish_pointcloud)"/>  
+  </include>
+  
+  <!-- Launch MoveIt for UR5 -->
+  <include file="$(find ur5_gripper_moveit_config)/launch/demo.launch" pass_all_args="true" if="$(arg enable_moveit)">
+    <!-- robot_description is loaded by gazebo.launch, to enable Gazebo features -->
+    <arg name="load_robot_description" value="false" />
+    <arg name="moveit_controller_manager" value="ros_control" />
+    
+  </include>
+</launch>
