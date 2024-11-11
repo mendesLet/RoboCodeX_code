@@ -162,7 +162,7 @@ You will see the Gazebo and Moveit rviz window pop up. You can test the robot co
 
 Please refer to [grasp_detection](grasp_detection/README.md) package for more details.
 
-## Build grounding models pacakge in a separate workspace
+## Build grounding models package in a separate workspace
 
 TODO: move the grounding model to a separate ros package. 
 
