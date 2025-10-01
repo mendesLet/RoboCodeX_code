@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="triple_camera_set">
+
+  <!-- Swallow extra args that the launch passes -->
+  <xacro:arg name="use_nominal_extrinsics" default="true"/>
+  <xacro:arg name="publish_pointcloud"     default="false"/>
+  <xacro:arg name="add_plug"               default="false"/>
+
+  <!-- Provide a root so joints can attach to "world" -->
+  <link name="world"/>
+
+  <!-- Realsense D435 macro -->
+  <xacro:include filename="$(find realsense_gazebo_description)/urdf/_d435.urdf.xacro"/>
+
+  <!-- LEFT camera -->
+  <xacro:sensor_d435 parent="world" name="camera_left" topics_ns="camera_left">
+    <origin xyz="0.4 0.3 1.2" rpy="0 0 0"/>
+  </xacro:sensor_d435>
+
+  <!-- RIGHT camera -->
+  <xacro:sensor_d435 parent="world" name="camera_right" topics_ns="camera_right">
+    <origin xyz="0.4 -0.3 1.2" rpy="0 0 0"/>
+  </xacro:sensor_d435>
+
+  <!-- TOP camera (looking down) -->
+  <xacro:sensor_d435 parent="world" name="camera_top" topics_ns="camera_top">
+    <origin xyz="0.0 0.0 1.8" rpy="-1.57 0 0"/>
+  </xacro:sensor_d435>
+
+</robot>
